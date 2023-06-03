@@ -18,13 +18,51 @@ public class MathController {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		
 		Double sum = convertToDouble(numberOne) + convertToDouble(numberTwo);
-		
-		
 		return sum; 
+	}
+	
+	@RequestMapping(value = "sub/{numberOne}/{numberTwo}")
+	public Double sub(@PathVariable("numberOne") String numberOne, 
+			@PathVariable("numberTwo") String numberTwo) throws Exception {
 		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsuportedMathOperationException("Digite valores numericos!");
+		}
+		Double sum = convertToDouble(numberOne) - convertToDouble(numberTwo);
+		return sum; 
+	}
+	
+	@RequestMapping(value = "mult/{numberOne}/{numberTwo}")
+	public Double mult(@PathVariable("numberOne") String numberOne, 
+			@PathVariable("numberTwo") String numberTwo) throws Exception {
 		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsuportedMathOperationException("Digite valores numericos!");
+		}
+		Double sum = convertToDouble(numberOne) * convertToDouble(numberTwo);
+		return sum; 
+	}
+	
+	@RequestMapping(value = "div/{numberOne}/{numberTwo}")
+	public Double div(@PathVariable("numberOne") String numberOne, 
+			@PathVariable("numberTwo") String numberTwo) throws Exception {
+		
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsuportedMathOperationException("Digite valores numericos!");
+		}
+		Double sum = convertToDouble(numberOne) / convertToDouble(numberTwo);
+		return sum; 
+	}
+	
+	@RequestMapping(value = "sqrt/{numberOne}")
+	public Double sqrt(@PathVariable("numberOne") String numberOne) throws Exception {
+		
+		if(!isNumeric(numberOne)) {
+			throw new UnsuportedMathOperationException("Digite valores numericos!");
+		}
+		Double sum = convertToDouble(numberOne);
+		return Math.sqrt(sum);
 	}
 
 	private Double convertToDouble(String strNumber) {
