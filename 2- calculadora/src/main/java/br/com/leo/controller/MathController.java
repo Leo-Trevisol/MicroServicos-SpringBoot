@@ -1,4 +1,4 @@
-package br.com.leo;
+package br.com.leo.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.leo.exception.UnsuportedMathOperationException;
+import br.com.leo.math.SimpleMath;
 
 @RestController
 public class MathController {
+	
+	SimpleMath math = new SimpleMath();
 	
 	@RequestMapping(value = "sum/{numberOne}/{numberTwo}")
 	public Double sum(@PathVariable("numberOne") String numberOne, 
@@ -18,8 +21,7 @@ public class MathController {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		Double sum = convertToDouble(numberOne) + convertToDouble(numberTwo);
-		return sum; 
+		return math.sumOperation(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 	
 	@RequestMapping(value = "sub/{numberOne}/{numberTwo}")
@@ -29,8 +31,7 @@ public class MathController {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		Double sum = convertToDouble(numberOne) - convertToDouble(numberTwo);
-		return sum; 
+		return math.subOperation(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 	
 	@RequestMapping(value = "mult/{numberOne}/{numberTwo}")
@@ -40,8 +41,7 @@ public class MathController {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		Double sum = convertToDouble(numberOne) * convertToDouble(numberTwo);
-		return sum; 
+		return math.multOperation(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 	
 	@RequestMapping(value = "div/{numberOne}/{numberTwo}")
@@ -51,8 +51,7 @@ public class MathController {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		Double sum = convertToDouble(numberOne) / convertToDouble(numberTwo);
-		return sum; 
+		return math.divOperation(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 	
 	@RequestMapping(value = "sqrt/{numberOne}")
@@ -61,8 +60,7 @@ public class MathController {
 		if(!isNumeric(numberOne)) {
 			throw new UnsuportedMathOperationException("Digite valores numericos!");
 		}
-		Double sum = convertToDouble(numberOne);
-		return Math.sqrt(sum);
+		return math.sqrtOperation(convertToDouble(numberOne));
 	}
 
 	private Double convertToDouble(String strNumber) {
