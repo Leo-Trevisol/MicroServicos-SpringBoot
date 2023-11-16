@@ -3,11 +3,15 @@ package br.com.leo.controller;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.leo.exception.UnsuportedMathOperationException;
 import br.com.leo.math.SimpleMath;
+import br.com.leo.request.TesteRequest;
+import br.com.leo.response.TesteResponse;
 
 @RestController
 public class MathController {
@@ -80,6 +84,15 @@ public class MathController {
 		}
 		String number = strNumber.replace(",", ".");
 		return number.matches("[-+]?[0-9]*\\.?[0-9]+");
+	}
+	
+    @PostMapping(value = "teste", produces = "application/json", consumes = "application/json")
+	public TesteResponse buscarGeUnidades(
+			@RequestBody TesteRequest req) {
+    	TesteResponse response = new TesteResponse();
+    	response.setTesteresp(req.getTeste());
+				return response;
+		
 	}
 
 }
