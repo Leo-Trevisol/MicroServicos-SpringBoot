@@ -1,7 +1,9 @@
 package br.com.leo.controller;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Date;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import br.com.leo.response.TesteResponse;
 
 @RestController
 public class MathController {
+	
 	
 	SimpleMath math = new SimpleMath();
 	
@@ -91,8 +94,29 @@ public class MathController {
 			@RequestBody TesteRequest req) {
     	TesteResponse response = new TesteResponse();
     	response.setTesteresp(req.getTeste());
-				return response;
-		
+    	
+    	Transaction transaction = null;
+    	try {
+    		Session session = ConexaoBD.getSessionFactory().openSession();
+    		transaction = (Transaction) session.beginTransaction();
+    		
+    		DbUsuarios pess = new DbUsuarios();
+    		
+    		pess.setNome("leozin3");
+    		pess.setEmail("leozin@gmail3.com");
+    		pess.setSenha("3333");
+    		pess.setNascimento(new Date());
+    		
+    		session.persist(pess);
+    		
+    		transaction.commit();
+    		
+    		
+    	}catch(Exception e) {
+    		System.out.println("Erro ao cadastrar pessoa: " + e.getMessage());
+    	}
+    	
+    		return 	response;	
 	}
 
 }
